@@ -1,0 +1,372 @@
+
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: { inlineMath: [['$$', '$$']], displayMath: [['$$$', '$$$']] }
+    });
+    </script>
+    <script src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <html>
+    <head>
+    <meta charset="UTF-8">
+    <title>ARTI-6: Towards Six-dimensional Articulatory Speech Encoding</title>
+    </head>
+    <body>
+    <h1>ARTI-6: Towards Six-dimensional Articulatory Speech Encoding</h1>
+    <h2>Submitted to ICASSP 2026</h2>
+        <h4>Paper: <a href="https://www.arxiv.org/abs/2509.21447">Click here</a></h4>
+        <h4>Code: <a href="https://github.com/lee-jhwn/arti-6">Click here</a></h4>
+
+
+    <!--link rel="stylesheet" type="text/css" href="../../stylesheet.css"-->
+    <div><hr />
+      
+    <article>
+    <!-- <h4>Paper : <a href="linktopaper">Click here</a></h4> -->
+    <h2>Authors</h2>
+    <h3> Jihwan Lee<sup>1</sup>, Sean Foley<sup>1,2</sup>, Thanathai Lertpetchpun<sup>1</sup>, Kevin Huang<sup>1</sup>, Yoonjeong Lee<sup>1</sup>, Tiantian Feng<sup>1</sup>, Louis Goldstein<sup>2</sup>, Dani Byrd<sup>2</sup>Shrikanth Narayanan<sup>1,2</sup><br>
+    </h3>
+    <h4>
+    <sup>1</sup>Signal Analysis and Interpretation Laboratory, University of Southern California, USA<br>
+    <sup>2</sup>Department of Linguistics, University of Southern California, USA
+    </h4>
+
+    <hr />
+    <h2>Abstract</h2>
+    <p>We propose ARTI-6, a compact six-dimensional articulatory speech encoding framework derived from real-time MRI data that captures crucial vocal tract regions including the velum, tongue root, and larynx. ARTI-6 consists of three components: (1) a six-dimensional articulatory feature set representing key regions of the vocal tract; (2) an articulatory inversion model, which predicts articulatory features from speech acoustics leveraging speech foundation models, achieving a prediction correlation of 0.87; and (3) an articulatory synthesis model, which reconstructs intelligible speech directly from articulatory features, showing that even a low-dimensional representation can generate natural-sounding speech. Together, ARTI-6 provides an interpretable, computationally efficient, and physiologically grounded framework for advancing articulatory inversion, synthesis, and broader speech technology applications. The source code and speech samples are publicly available.</p>
+    <img src="./src/overview_architecture.png" alt="Overview of ARTI-6", width="80%", style="text-align: center">
+    <br />
+
+    </article>
+    <div><hr />
+    <article>
+    <h2>Speech Samples</h2>
+
+
+    <h4>Speaker ID 237 (Female)</h4>
+    <table>
+    <tbody>
+    <colgroup>
+    <col style="width:10%">
+    <col style="width:3%">
+    <col style="width:23%">
+    <col style="width:23%">
+    <col style="width:23%">
+    </colgroup>
+    <tr>
+        <td style="text-align: center"><i><b>Intermediate Feature Type</b></i></td>
+        <td style="text-align: center"><i><b>Dimension Size</b></i></td>
+        <td style="text-align: center">The shaggy coat of the prairie, which they lifted to make him a bed, has vanished forever.</td>
+        <td style="text-align: center">The wind was flapping her big hat and teasing a curl of her chestnut colored hair.</td>
+        <td style="text-align: center">His yellow canvas leggings and khaki trousers were splashed to the knees.</td>
+
+        </tr>
+
+        <tr>
+        <td style="text-align: center;padding-right: 20px;padding-left: 20px;"><i>Ground-truth</i></td>
+        <td style="text-align: center;padding-right: 20px;padding-left: 20px;"><i>-</i></td>
+        <td style="text-align: center"><audio controls="controls"><source src="src/wavs/237_134493_000002_000003_gt.wav" /></audio></td>
+        <td style="text-align: center"><audio controls="controls"><source src="src/wavs/237_134493_000007_000004_gt.wav" /></audio></td>
+        <td style="text-align: center"><audio controls="controls"><source src="src/wavs/237_134500_000004_000008_gt.wav" /></audio></td>
+        
+        </tr>
+        <tr><td colspan="5"> <i> <br><br></i></td></tr>
+
+        <tr>
+        <td style="text-align: center;padding-right: 20px;padding-left: 20px;"><i>Mel-spectrogram [1]</i></td>
+        <td style="text-align: center;padding-right: 20px;padding-left: 20px;"><i>80</i></td>
+        <td style="text-align: center"><audio controls="controls"><source src="src/wavs/237_134493_000002_000003_mel.wav" /></audio></td>
+        <td style="text-align: center"><audio controls="controls"><source src="src/wavs/237_134493_000007_000004_mel.wav" /></audio></td>
+        <td style="text-align: center"><audio controls="controls"><source src="src/wavs/237_134500_000004_000008_mel.wav" /></audio></td>
+        
+        </tr>
+    <tr><td colspan="5"> <i> <br><br></i></td></tr>
+
+    <tr>
+    <td style="text-align: center;padding-right: 20px;padding-left: 20px;"><i>EMA+pitch+loudness [2]</i></td>
+    <td style="text-align: center;padding-right: 20px;padding-left: 20px;"><i>14</i></td>
+    <td style="text-align: center"><audio controls="controls"><source src="src/wavs/237_134493_000002_000003_ema.wav" /></audio></td>
+    <td style="text-align: center"><audio controls="controls"><source src="src/wavs/237_134493_000007_000004_ema.wav" /></audio></td>
+    <td style="text-align: center"><audio controls="controls"><source src="src/wavs/237_134500_000004_000008_ema.wav" /></audio></td>
+
+    </tr>
+
+</tr>
+<tr><td colspan="5"> <i> <br><br></i></td></tr>
+
+<tr>
+<td style="text-align: center;padding-right: 20px;padding-left: 20px;color:#0057FF;"><b><i>ARTI-6 (Ours)</i></b></td>
+<td style="text-align: center;padding-right: 20px;padding-left: 20px;color:#0057FF;"><i>6</i></td>
+<td style="text-align: center"><audio controls="controls"><source src="src/wavs/237_134493_000002_000003_arti6.wav" /></audio></td>
+<td style="text-align: center"><audio controls="controls"><source src="src/wavs/237_134493_000007_000004_arti6.wav" /></audio></td>
+<td style="text-align: center"><audio controls="controls"><source src="src/wavs/237_134500_000004_000008_arti6.wav" /></audio></td>
+
+</tr>
+
+
+</tr>
+
+</tr>
+    </tbody>
+    </table>
+    <br />
+    <br />
+
+       <h4>Speaker ID 1580 (Female)</h4>
+    <table>
+    <tbody>
+    <colgroup>
+    <col style="width:10%">
+    <col style="width:3%">
+    <col style="width:23%">
+    <col style="width:23%">
+    <col style="width:23%">
+    </colgroup>
+    <tr>
+        <td style="text-align: center"><i><b>Intermediate Feature Type</b></i></td>
+        <td style="text-align: center"><i><b>Dimension Size</b></i></td>
+        <td style="text-align: center">"I am afraid there are no signs here," said he.</td>
+        <td style="text-align: center">I'll take the armchair in the middle.</td>
+        <td style="text-align: center">Well, then, I must make some suggestions to you.</td>
+
+        </tr>
+
+        <tr>
+        <td style="text-align: center;padding-right: 20px;padding-left: 20px;"><i>Ground-truth</i></td>
+        <td style="text-align: center;padding-right: 20px;padding-left: 20px;"><i>-</i></td>
+        <td style="text-align: center"><audio controls="controls"><source src="src/wavs/1580_141083_000045_000000_gt.wav" /></audio></td>
+        <td style="text-align: center"><audio controls="controls"><source src="src/wavs/1580_141084_000050_000004_gt.wav" /></audio></td>
+        <td style="text-align: center"><audio controls="controls"><source src="src/wavs/1580_141084_000057_000000_gt.wav" /></audio></td>
+        
+        </tr>
+        <tr><td colspan="5"> <i> <br><br></i></td></tr>
+
+        <tr>
+        <td style="text-align: center;padding-right: 20px;padding-left: 20px;"><i>Mel-spectrogram [1]</i></td>
+        <td style="text-align: center;padding-right: 20px;padding-left: 20px;"><i>80</i></td>
+        <td style="text-align: center"><audio controls="controls"><source src="src/wavs/1580_141083_000045_000000_mel.wav" /></audio></td>
+        <td style="text-align: center"><audio controls="controls"><source src="src/wavs/1580_141084_000050_000004_mel.wav" /></audio></td>
+        <td style="text-align: center"><audio controls="controls"><source src="src/wavs/1580_141084_000057_000000_mel.wav" /></audio></td>
+        
+        </tr>
+    <tr><td colspan="5"> <i> <br><br></i></td></tr>
+
+    <tr>
+    <td style="text-align: center;padding-right: 20px;padding-left: 20px;"><i>EMA+pitch+loudness [2]</i></td>
+    <td style="text-align: center;padding-right: 20px;padding-left: 20px;"><i>14</i></td>
+    <td style="text-align: center"><audio controls="controls"><source src="src/wavs/1580_141083_000045_000000_ema.wav" /></audio></td>
+    <td style="text-align: center"><audio controls="controls"><source src="src/wavs/1580_141084_000050_000004_ema.wav" /></audio></td>
+    <td style="text-align: center"><audio controls="controls"><source src="src/wavs/1580_141084_000057_000000_ema.wav" /></audio></td>
+
+    </tr>
+
+</tr>
+<tr><td colspan="5"> <i> <br><br></i></td></tr>
+
+<tr>
+<td style="text-align: center;padding-right: 20px;padding-left: 20px;color:#0057FF;"><b><i>ARTI-6 (Ours)</i></b></td>
+<td style="text-align: center;padding-right: 20px;padding-left: 20px;color:#0057FF;"><i>6</i></td>
+<td style="text-align: center"><audio controls="controls"><source src="src/wavs/1580_141083_000045_000000_arti6.wav" /></audio></td>
+<td style="text-align: center"><audio controls="controls"><source src="src/wavs/1580_141084_000050_000004_arti6.wav" /></audio></td>
+<td style="text-align: center"><audio controls="controls"><source src="src/wavs/1580_141084_000057_000000_arti6.wav" /></audio></td>
+
+</tr>
+
+
+</tr>
+
+</tr>
+    </tbody>
+    </table>
+
+     <br />
+    <br />
+
+       <h4>Speaker ID 260 (Male)</h4>
+    <table>
+    <tbody>
+    <colgroup>
+    <col style="width:10%">
+    <col style="width:3%">
+    <col style="width:23%">
+    <col style="width:23%">
+    <col style="width:23%">
+    </colgroup>
+    <tr>
+        <td style="text-align: center"><i><b>Intermediate Feature Type</b></i></td>
+        <td style="text-align: center"><i><b>Dimension Size</b></i></td>
+        <td style="text-align: center">The danger is approaching.</td>
+        <td style="text-align: center">During his watch I slept.</td>
+        <td style="text-align: center">Hans had spoken truly.</td>
+
+        </tr>
+
+        <tr>
+        <td style="text-align: center;padding-right: 20px;padding-left: 20px;"><i>Ground-truth</i></td>
+        <td style="text-align: center;padding-right: 20px;padding-left: 20px;"><i>-</i></td>
+        <td style="text-align: center"><audio controls="controls"><source src="src/wavs/260_123286_000036_000001_gt.wav" /></audio></td>
+        <td style="text-align: center"><audio controls="controls"><source src="src/wavs/260_123286_000037_000003_gt.wav" /></audio></td>
+        <td style="text-align: center"><audio controls="controls"><source src="src/wavs/260_123286_000057_000000_gt.wav" /></audio></td>
+        
+        </tr>
+        <tr><td colspan="5"> <i> <br><br></i></td></tr>
+
+        <tr>
+        <td style="text-align: center;padding-right: 20px;padding-left: 20px;"><i>Mel-spectrogram [1]</i></td>
+        <td style="text-align: center;padding-right: 20px;padding-left: 20px;"><i>80</i></td>
+        <td style="text-align: center"><audio controls="controls"><source src="src/wavs/260_123286_000036_000001_mel.wav" /></audio></td>
+        <td style="text-align: center"><audio controls="controls"><source src="src/wavs/260_123286_000037_000003_mel.wav" /></audio></td>
+        <td style="text-align: center"><audio controls="controls"><source src="src/wavs/260_123286_000057_000000_mel.wav" /></audio></td>
+        
+        </tr>
+    <tr><td colspan="5"> <i> <br><br></i></td></tr>
+
+    <tr>
+    <td style="text-align: center;padding-right: 20px;padding-left: 20px;"><i>EMA+pitch+loudness [2]</i></td>
+    <td style="text-align: center;padding-right: 20px;padding-left: 20px;"><i>14</i></td>
+    <td style="text-align: center"><audio controls="controls"><source src="src/wavs/260_123286_000036_000001_ema.wav" /></audio></td>
+    <td style="text-align: center"><audio controls="controls"><source src="src/wavs/260_123286_000037_000003_ema.wav" /></audio></td>
+    <td style="text-align: center"><audio controls="controls"><source src="src/wavs/260_123286_000057_000000_ema.wav" /></audio></td>
+
+    </tr>
+
+</tr>
+<tr><td colspan="5"> <i> <br><br></i></td></tr>
+
+<tr>
+<td style="text-align: center;padding-right: 20px;padding-left: 20px;color:#0057FF;"><b><i>ARTI-6 (Ours)</i></b></td>
+<td style="text-align: center;padding-right: 20px;padding-left: 20px;color:#0057FF;"><i>6</i></td>
+<td style="text-align: center"><audio controls="controls"><source src="src/wavs/260_123286_000036_000001_arti6.wav" /></audio></td>
+<td style="text-align: center"><audio controls="controls"><source src="src/wavs/260_123286_000037_000003_arti6.wav" /></audio></td>
+<td style="text-align: center"><audio controls="controls"><source src="src/wavs/260_123286_000057_000000_arti6.wav" /></audio></td>
+
+</tr>
+
+
+</tr>
+
+</tr>
+    </tbody>
+    </table>
+
+
+     <br />
+    <br />
+
+       <h4>Speaker ID 2830 (Male)</h4>
+    <table>
+    <tbody>
+    <colgroup>
+    <col style="width:10%">
+    <col style="width:3%">
+    <col style="width:23%">
+    <col style="width:23%">
+    <col style="width:23%">
+    </colgroup>
+    <tr>
+        <td style="text-align: center"><i><b>Intermediate Feature Type</b></i></td>
+        <td style="text-align: center"><i><b>Dimension Size</b></i></td>
+        <td style="text-align: center">The most they could claim is that they were sent by others.</td>
+        <td style="text-align: center">It must be watched.</td>
+        <td style="text-align: center">There may be something to that.</td>
+
+        </tr>
+
+        <tr>
+        <td style="text-align: center;padding-right: 20px;padding-left: 20px;"><i>Ground-truth</i></td>
+        <td style="text-align: center;padding-right: 20px;padding-left: 20px;"><i>-</i></td>
+        <td style="text-align: center"><audio controls="controls"><source src="src/wavs/2830_3980_000026_000005_gt.wav" /></audio></td>
+        <td style="text-align: center"><audio controls="controls"><source src="src/wavs/2830_3980_000096_000001_gt.wav" /></audio></td>
+        <td style="text-align: center"><audio controls="controls"><source src="src/wavs/2830_3980_000100_000001_gt.wav" /></audio></td>
+        
+        </tr>
+        <tr><td colspan="5"> <i> <br><br></i></td></tr>
+
+        <tr>
+        <td style="text-align: center;padding-right: 20px;padding-left: 20px;"><i>Mel-spectrogram [1]</i></td>
+        <td style="text-align: center;padding-right: 20px;padding-left: 20px;"><i>80</i></td>
+        <td style="text-align: center"><audio controls="controls"><source src="src/wavs/2830_3980_000026_000005_mel.wav" /></audio></td>
+        <td style="text-align: center"><audio controls="controls"><source src="src/wavs/2830_3980_000096_000001_mel.wav" /></audio></td>
+        <td style="text-align: center"><audio controls="controls"><source src="src/wavs/2830_3980_000100_000001_mel.wav" /></audio></td>
+        
+        </tr>
+    <tr><td colspan="5"> <i> <br><br></i></td></tr>
+
+    <tr>
+    <td style="text-align: center;padding-right: 20px;padding-left: 20px;"><i>EMA+pitch+loudness [2]</i></td>
+    <td style="text-align: center;padding-right: 20px;padding-left: 20px;"><i>14</i></td>
+    <td style="text-align: center"><audio controls="controls"><source src="src/wavs/2830_3980_000026_000005_ema.wav" /></audio></td>
+    <td style="text-align: center"><audio controls="controls"><source src="src/wavs/2830_3980_000096_000001_ema.wav" /></audio></td>
+    <td style="text-align: center"><audio controls="controls"><source src="src/wavs/2830_3980_000100_000001_ema.wav" /></audio></td>
+
+    </tr>
+
+</tr>
+<tr><td colspan="5"> <i> <br><br></i></td></tr>
+
+<tr>
+<td style="text-align: center;padding-right: 20px;padding-left: 20px;color:#0057FF;"><b><i>ARTI-6 (Ours)</i></b></td>
+<td style="text-align: center;padding-right: 20px;padding-left: 20px;color:#0057FF;"><i>6</i></td>
+<td style="text-align: center"><audio controls="controls"><source src="src/wavs/2830_3980_000026_000005_arti6.wav" /></audio></td>
+<td style="text-align: center"><audio controls="controls"><source src="src/wavs/2830_3980_000096_000001_arti6.wav" /></audio></td>
+<td style="text-align: center"><audio controls="controls"><source src="src/wavs/2830_3980_000100_000001_arti6.wav" /></audio></td>
+
+</tr>
+
+
+</tr>
+
+</tr>
+    </tbody>
+    </table>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <div><hr />
+
+<h2>References</h2>
+   
+        <p>[1] Jungil Kong, Jaehyeon Kim, and Jaekyoung Bae, “Hifi-gan: Generative adversarial networks for efficient and high fidelity speech synthesis,” Advances in neural information processing systems, 2020</p>
+        <p>[2] Cheol J Cho, Peter Wu, Tejas S Prabhune, Dhruv Agarwal, and Gopala K Anumanchipalli, “Coding speech through vocal tract kinematics,” IEEE Journal of Selected Topics in Signal Processing, 2024</p>
+        <br />
+
+        <br />
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+   
+
+
+    
+    <br><br><br><br><br><br><br><br>
+    
+    
+
+    <br />
+    
+
+    
+  
+    
+    <br><br><br><br><br><br><br><br>
+    
+    
+    </article>
+    </div>
+    </body>
+    </html>
+    

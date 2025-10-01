@@ -11,7 +11,7 @@ We propose ARTI-6, a compact six-dimensional articulatory speech encoding framew
 ![overall_architecture](docs/src/overview_architecture.png)
 
 ## Data
-We use the dataset from [A long-form single-speaker real-time MRI speech dataset and benchmark](https://arxiv.org/abs/2509.14479). It can be downloaded from [here](https://sail.usc.edu/span/single_spk/).
+For the articulatory inversion task, we use the dataset from [A long-form single-speaker real-time MRI speech dataset and benchmark](https://arxiv.org/abs/2509.14479). It can be downloaded from [here](https://sail.usc.edu/span/single_spk). For the articulatory synthesis task, we utilize [LibriTTS-R](https://www.openslr.org/141) for data augmentation. 
 
 ## Sample Page
 Speech samples are available [here](https://lee-jhwn.github.io/arti-6/ "speech samples").

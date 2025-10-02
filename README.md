@@ -16,10 +16,44 @@ For the articulatory inversion task, we use the dataset from [A long-form single
 ## Sample Page
 Speech samples are available [here](https://lee-jhwn.github.io/arti-6/ "speech samples").
 
-## Training
-Coming soon...
+## Example
+An example code snippet is available in [`example.py`](example.py). You can load the model as below. The checkpoints will be automatically loaded from huggingface repository. Only `WavLM-large` version is currently supported.
 
-## Inference
-Coming soon...
+```python
+from arti6 import ARTI6
+
+arti6_model = ARTI6(device=device) # device: cpu or cuda
+arti6_model.load_model()
+```
+
+### Articulatory Inversion
+Once the model is loaded, articulatory features can be inferred from speech acoustics as below. It will return a dictionary of `arti_feats` and `spk_emb`, which are articulatory features and speaker embedding, respectively. The 
+
+```python
+articulatory_feats = arti6_model.invert(wav_path=<path_to_wav_file>)
+```
+
+It will return the predicted articulatory features in the following format. The current version does not support batch processing, hence the batch size (B) is fixed to 1. The order of the articulatory features (Regions-of-Interest) are: `Lip Aperture (LA), Tongue Tip (TT), TB (Tongue Body), Velum (VL), Tongue Root (TR), and Larynx (LX)`. The speaker embedding is extracted by `ECAPA-TDNN`.
+
+```python
+{
+    "arti_feats": (B,T,6), # LA, TT, TB, VL, TR, and LX
+    "spk_emb": (B,192)
+}
+```
+
+### Articulatory Synthesis
+Speech acoustics can be synthesized from articulatory features as below.
+
+```python
+synthesized_audio = arti6_model.synthesize(articulatory_feats['arti_feats'], articulatory_feats['spk_emb'])
+```
+
+## Training
+Training code will be available upon publication.
+
+## Contact
+Jihwan Lee (jihwan@usc.edu)
 
 ## Reference
+Jungil Kong, Jaehyeon Kim, and Jaekyoung Bae, “Hifi-gan: Generative adversarial networks for efficient and high fidelity speech synthesis,” Advances in neural information processing systems, 2020 [(https://github.com/jik876/hifi-gan)](https://github.com/jik876/hifi-gan)

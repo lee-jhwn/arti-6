@@ -51,9 +51,9 @@ class ARTI6():
                 invert_lora_ckpt = hf_hub_download(repo_id='lee-jhwn/arti-6', filename=invert_ckpt.replace('flt','lora'))
                 invert_ckpt = hf_hub_download(repo_id='lee-jhwn/arti-6', filename=invert_ckpt)
 
-            self.invert_model.load_state_dict(torch.load(invert_ckpt, weights_only=True), strict=False)
+            self.invert_model.load_state_dict(torch.load(invert_ckpt, weights_only=True, map_location=self.device), strict=False)
             if self.finetune_method == "lora": 
-                self.invert_model.load_state_dict(torch.load(invert_lora_ckpt), strict=False)
+                self.invert_model.load_state_dict(torch.load(invert_lora_ckpt, map_location=self.device), strict=False)
             
             else: #TODO
                 NotImplementedError()

@@ -30,9 +30,6 @@ class WavLMEncoderLayer(nn.Module):
         self.final_layer_norm = nn.LayerNorm(config.hidden_size, eps=config.layer_norm_eps)
         self.config = config
         
-        if self.config.finetune_method == "embedding_prompt" or self.config.finetune_method == "combined":
-            self.embed_prompt = nn.Parameter(torch.randn([1, self.config.embedding_prompt_dim, 768]))
-            nn.init.xavier_uniform_(self.embed_prompt)
         if layer_idx > config.num_hidden_layers // 2:
             if self.config.finetune_method == "lora" or self.config.finetune_method == "combined":
                 self.feed_forward.intermediate_dense    = lora.Linear(config.hidden_size, config.intermediate_size, r=config.lora_rank)

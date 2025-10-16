@@ -132,9 +132,7 @@ if __name__=="__main__":
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
     arti6_model = ARTI6(device=device)
-    arti6_model.load_model(from_huggingface=True,)
-                        #    invert_ckpt='/home/jihwan/scratch_jhwn/jihwan/projects/2509_mriarti/code/inversion/vox-profile/log/articulatory_inversion_wavlm_jhwn_v1/wavlm_large/lr00005_ep50_lora_16_accumulation_frozen/best_filtered_epoch_40.pt',
-                        #                     synthesis_ckpt='/home/jihwan/scratch_jhwn/jihwan/projects/2509_mriarti/code/hifi-gan/logs/config_v2_libri_only_fix/g_01200000')
+    arti6_model.load_model()
     articulatory_feats = arti6_model.invert(wav_path='example_gt.wav'
 )
     synthesized_audio = arti6_model.synthesize(articulatory_feats['arti_feats'], articulatory_feats['spk_emb'])

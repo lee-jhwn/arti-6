@@ -97,9 +97,7 @@ class ARTI6():
     def load_wav(self, wav_path, sr=16000):
 
         wav, _ = librosa.load(wav_path, sr=sr)
-        # wav_24k, _ = librosa.load(wav_path, sr=24000) # not ideal, needs to be fixed later.
         wav = torch.tensor(wav).unsqueeze(0).to(self.device)
-        # wav_24k = torch.tensor(wav_24k).unsqueeze(0).to(self.device)
         return wav
     
     def invert(self, wav_path): # TODO: add batch processing

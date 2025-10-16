@@ -53,7 +53,7 @@ class ARTI6():
 
             self.invert_model.load_state_dict(torch.load(invert_ckpt, weights_only=True, map_location=self.device), strict=False)
             if self.finetune_method == "lora": 
-                self.invert_model.load_state_dict(torch.load(invert_lora_ckpt, map_location=self.device), strict=False)
+                self.invert_model.load_state_dict(torch.load(invert_ckpt.replace('filtered','lora'), map_location=self.device), strict=False)
             
             else: #TODO
                 NotImplementedError()
@@ -97,17 +97,17 @@ class ARTI6():
     def load_wav(self, wav_path, sr=16000):
 
         wav, _ = librosa.load(wav_path, sr=sr)
-        wav_24k, _ = librosa.load(wav_path, sr=24000) # not ideal, needs to be fixed later.
+        # wav_24k, _ = librosa.load(wav_path, sr=24000) # not ideal, needs to be fixed later.
         wav = torch.tensor(wav).unsqueeze(0).to(self.device)
-        wav_24k = torch.tensor(wav_24k).unsqueeze(0).to(self.device)
-        return wav, wav_24k
+        # wav_24k = torch.tensor(wav_24k).unsqueeze(0).to(self.device)
+        return wav
     
     def invert(self, wav_path): # TODO: add batch processing
         
-        wav, wav_24k = self.load_wav(wav_path)
+        wav = self.load_wav(wav_path)
         with torch.no_grad():
             arti_feats = self.invert_model(wav)
-            spk_emb = self.extract_spkemb(wav_24k)
+            spk_emb = self.extract_spkemb(wav)
 
         return {'arti_feats': arti_feats, # (B, T, D); B=1 and D=6
                 'spk_emb': spk_emb # 192 dim
@@ -134,8 +134,11 @@ if __name__=="__main__":
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
     arti6_model = ARTI6(device=device)
-    arti6_model.load_model()
-    articulatory_feats = arti6_model.invert(wav_path='/home/jihwan/scratch_jhwn/jihwan/projects/2509_mriarti/code/hifi-gan/samples_mos/candidates/121_121726_000046_000003_gt.wav')
+    arti6_model.load_model(from_huggingface=True,)
+                        #    invert_ckpt='/home/jihwan/scratch_jhwn/jihwan/projects/2509_mriarti/code/inversion/vox-profile/log/articulatory_inversion_wavlm_jhwn_v1/wavlm_large/lr00005_ep50_lora_16_accumulation_frozen/best_filtered_epoch_40.pt',
+                        #                     synthesis_ckpt='/home/jihwan/scratch_jhwn/jihwan/projects/2509_mriarti/code/hifi-gan/logs/config_v2_libri_only_fix/g_01200000')
+    articulatory_feats = arti6_model.invert(wav_path='example_gt.wav'
+)
     synthesized_audio = arti6_model.synthesize(articulatory_feats['arti_feats'], articulatory_feats['spk_emb'])
-    sf.write('test_synthesized.wav', synthesized_audio, 16000)
+    sf.write('example_out.wav', synthesized_audio, 16000)
 
